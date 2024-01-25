@@ -24,7 +24,11 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
 
 # Spring Boot 1.5 makes actuator secure by default
 management.security.enabled: false
@@ -81,11 +85,11 @@ spring:
     activate:
       on-profile: mysql
   datasource:
-    url: jdbc:mysql://localhost:3306/petclinic?useSSL=false
+    url: jdbc:mysql://localhost:3306/petclinic?createDatabaseIfNotExist=true
     username: root
     password: petclinic
-  sql:
-    init:
-      schema-locations: classpath*:db/mysql/schema.sql
-      data-locations: classpath*:db/mysql/data.sql
-      init: ALWAYS
+  # sql:
+  #   init:
+  #     schema-locations: classpath*:db/mysql/schema.sql
+  #     data-locations: classpath*:db/mysql/data.sql
+  #     init: ALWAYS
