@@ -5,7 +5,22 @@ server:
   port: 0
   # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
   shutdown: graceful
-
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/petclinic?useSSL=false
+    username: root
+    password: petclinic
+  sql:
+    init:
+      schema-locations: classpath*:db/mysql/schema.sql
+      data-locations: classpath*:db/mysql/data.sql
+      init: ALWAYS
+      
 # embedded database init, supports mysql too trough the 'mysql' spring profile
 spring:
   # sql:
@@ -22,6 +37,7 @@ spring:
       # Override configuration with any local property source
       override-none: true
   jpa:
+    database: mysql
     open-in-view: false
     hibernate:
       ddl-auto: update
@@ -79,18 +95,3 @@ chaos:
       rest-controller: false
       service: false
 
----
-spring:
-  config:
-    activate:
-      on-profile: mysql
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/petclinic?useSSL=false
-    username: root
-    password: petclinic
-  sql:
-    init:
-      schema-locations: classpath*:db/mysql/schema.sql
-      data-locations: classpath*:db/mysql/data.sql
-      init: ALWAYS
