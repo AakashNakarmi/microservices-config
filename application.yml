@@ -43,7 +43,6 @@ spring:
       # Override configuration with any local property source
       override-none: true
   jpa:
-    database: mysql
     open-in-view: false
     hibernate:
       ddl-auto: update
