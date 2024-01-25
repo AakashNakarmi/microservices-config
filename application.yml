@@ -86,7 +86,7 @@ spring:
       on-profile: mysql
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/petclinic?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/petclinic?useSSL=false
     username: root
     password: petclinic
   # sql:
