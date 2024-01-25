@@ -6,33 +6,12 @@ server:
   # The stop processing uses a timeout which provides a grace period during which existing requests will be allowed to complete but no new requests will be permitted
   shutdown: graceful
 
-spring:
-  config:
-    activate:
-      on-profile: mysql
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/petclinic?useSSL=false
-    username: root
-    password: petclinic
-  sql:
-    init:
-      schema-locations: classpath*:db/mysql/schema.sql
-      data-locations: classpath*:db/mysql/data.sql
-      init: ALWAYS
----
-
-# Spring Boot 1.5 makes actuator secure by default
-management.security.enabled: false
-# Enable all Actuators and not only the two available by default /health and /info starting Spring Boot 2.0
-management.endpoints.web.exposure.include: "*"
-
 # embedded database init, supports mysql too trough the 'mysql' spring profile
 spring:
-  # sql:
-  #   init:
-  #     schema-locations: classpath*:db/hsqldb/schema.sql
-  #     data-locations: classpath*:db/hsqldb/data.sql
+  sql:
+    init:
+      schema-locations: classpath*:db/hsqldb/schema.sql
+      data-locations: classpath*:db/hsqldb/data.sql
   sleuth:
     sampler:
       probability: 1.0
@@ -45,12 +24,12 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        show_sql: true
-        format_sql: true
+      ddl-auto: none
 
+# Spring Boot 1.5 makes actuator secure by default
+management.security.enabled: false
+# Enable all Actuators and not only the two available by default /health and /info starting Spring Boot 2.0
+management.endpoints.web.exposure.include: "*"
 
 # Temporary hack required by the Spring Boot 2 / Spring Cloud Finchley branch
 # Waiting issue https://github.com/spring-projects/spring-boot/issues/13042
@@ -96,3 +75,17 @@ chaos:
       rest-controller: false
       service: false
 
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/petclinic?useSSL=false
+    username: root
+    password: petclinic
+  sql:
+    init:
+      schema-locations: classpath*:db/mysql/schema.sql
+      data-locations: classpath*:db/mysql/data.sql
+      init: ALWAYS
